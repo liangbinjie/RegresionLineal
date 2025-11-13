@@ -1,6 +1,6 @@
 def main():
     opcion = input("Selecciona que desea hacer:" +
-                   "\n1. Calcular Recta Regresion Lineal Simple" +
+                   "\n1. Calcular Recta Regresion Lineal Simple Conociendo los datos de las columnas X y Y" +
                    "\nx. Salir"
                    "\n> ")
     if opcion == "1":

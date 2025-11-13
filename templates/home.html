@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Estadística - Inicio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+        }
+        
+        .card-icon {
+            font-size: 4em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .card-description {
+            color: #666;
+            line-height: 1.6;
+            text-align: center;
+            font-size: 0.95em;
+        }
+        
+        .card-status {
+            margin-top: 20px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        .status-active {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .status-coming {
+            background: #fff3e0;
+            color: #e65100;
+        }
+        
+        .card.active {
+            border: 3px solid #667eea;
+        }
+        
+        .card.coming-soon {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .card.coming-soon:hover {
+            transform: none;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 30px 20px;
+            margin-top: 40px;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .header p {
+                font-size: 1em;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📊 Calculadora Estadística</h1>
+        <p>Herramientas para análisis estadístico y regresión</p>
+    </div>
+    
+    <div class="container">
+        <div class="cards-grid">
+            <!-- Regresión Lineal Simple -->
+            <a href="/regresion-lineal" class="card active">
+                <div class="card-icon">📈</div>
+                <h2 class="card-title">Regresión Lineal Simple</h2>
+                <p class="card-description">
+                    Calcula la ecuación de la recta de regresión lineal simple conociendo los datos de las columnas X y Y. 
+                    Obtén los coeficientes a y b, y visualiza todos los cálculos intermedios.
+                </p>
+                <div class="card-status status-active">✓ Disponible</div>
+            </a>
+            
+            <!-- Regresión Múltiple -->
+            <div class="card coming-soon">
+                <div class="card-icon">📊</div>
+                <h2 class="card-title">Regresión Múltiple</h2>
+                <p class="card-description">
+                    Calcula regresiones con múltiples variables independientes. 
+                    Análisis de correlación múltiple y coeficientes de determinación.
+                </p>
+                <div class="card-status status-coming">⏳ Próximamente</div>
+            </div>
+            
+            <!-- Correlación -->
+            <div class="card coming-soon">
+                <div class="card-icon">🔗</div>
+                <h2 class="card-title">Coeficiente de Correlación</h2>
+                <p class="card-description">
+                    Calcula el coeficiente de correlación de Pearson entre dos variables. 
+                    Determina la fuerza y dirección de la relación lineal.
+                </p>
+                <div class="card-status status-coming">⏳ Próximamente</div>
+            </div>
+            
+            <!-- Distribución Normal -->
+            <div class="card coming-soon">
+                <div class="card-icon">📉</div>
+                <h2 class="card-title">Distribución Normal</h2>
+                <p class="card-description">
+                    Calcula probabilidades y valores críticos de la distribución normal. 
+                    Incluye cálculo de Z-scores y áreas bajo la curva.
+                </p>
+                <div class="card-status status-coming">⏳ Próximamente</div>
+            </div>
+            
+            <!-- Estadística Descriptiva -->
+            <div class="card coming-soon">
+                <div class="card-icon">📋</div>
+                <h2 class="card-title">Estadística Descriptiva</h2>
+                <p class="card-description">
+                    Calcula media, mediana, moda, desviación estándar, varianza y otros estadísticos descriptivos 
+                    para tus datos.
+                </p>
+                <div class="card-status status-coming">⏳ Próximamente</div>
+            </div>
+            
+            <!-- Prueba de Hipótesis -->
+            <div class="card coming-soon">
+                <div class="card-icon">🔬</div>
+                <h2 class="card-title">Prueba de Hipótesis</h2>
+                <p class="card-description">
+                    Realiza pruebas t de Student, pruebas Z y análisis de varianza (ANOVA) 
+                    para comparar medias y tomar decisiones estadísticas.
+                </p>
+                <div class="card-status status-coming">⏳ Próximamente</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>Desarrollado para análisis estadístico educativo y profesional</p>
+        <p>© 2025 - Calculadora Estadística</p>
+    </div>
+</body>
+</html>
