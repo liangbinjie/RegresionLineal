@@ -54,10 +54,12 @@ def calcular_regresion():
         # Calcular valores predichos y residuos
         y_pred = [a + b * x for x in array_x]
         residuos = [y - y_p for y, y_p in zip(array_y, y_pred)]
-        sum_residuos_cuadrados = sum(r ** 2 for r in residuos)
+        
+        # Calcular SCE (Suma de Cuadrados del Error)
+        SCE = Syy - b * Sxy
         
         # Calcular S^2 (varianza del error) y s (desviación estándar del error)
-        S2 = sum_residuos_cuadrados / (n - 2) if n > 2 else 0
+        S2 = SCE / (n - 2) if n > 2 else 0
         s = S2 ** 0.5
         
         # Preparar los resultados
@@ -73,6 +75,7 @@ def calcular_regresion():
             'Sxx': Sxx,
             'Syy': Syy,
             'Sxy': Sxy,
+            'SCE': SCE,
             'S2': S2,
             's': s,
             'a': a,
