@@ -249,6 +249,50 @@
                     <div class="help-text">Ingrese los valores separados por comas</div>
                 </div>
                 
+                <!-- Agregar estos campos después de los inputs de Y -->
+                <div class="form-group">
+                    <label for="x0">Valor x₀ para predicción:</label>
+                    <input type="text" id="x0" name="x0" 
+                           placeholder="Ejemplo: 3" 
+                           value="{{ resultados.x0 if resultados else '' }}"
+                           required>
+                    <div class="help-text">Valor de X para el cual se quiere predecir Y</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="t_value">Valor t (t<sub>δ/2, n-2</sub>):</label>
+                    <input type="text" id="t_value" name="t_value" 
+                           placeholder="Ejemplo: 2.776" 
+                           value="{{ resultados.t_value if resultados else '' }}"
+                           required>
+                    <div class="help-text">Valor t de la distribución t-Student para δ/2 y n-2 grados de libertad</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="delta">Nivel de significancia δ:</label>
+                    <input type="text" id="delta" name="delta" 
+                           placeholder="Ejemplo: 0.05" 
+                           value="{{ resultados.delta if resultados else '0.05' }}"
+                           required>
+                    <div class="help-text">Nivel de significancia (ej: 0.05 para 95% de confianza)</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="a_S">Coeficiente a de la función S (salario fijo):</label>
+                    <input type="text" id="a_S" name="a_S" 
+                        placeholder="Ejemplo: 30000" 
+                        value="{{ resultados.a_S if resultados else '' }}">
+                    <div class="help-text">Término independiente de la función salario (S = a + b·Y) - Opcional</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="b_S">Coeficiente b de la función S (por pieza):</label>
+                    <input type="text" id="b_S" name="b_S" 
+                        placeholder="Ejemplo: 100" 
+                        value="{{ resultados.b_S if resultados else '' }}">
+                    <div class="help-text">Coeficiente que multiplica a Y en la función salario (S = a + b·Y) - Opcional</div>
+                </div>
+                
                 <button type="submit">🧮 Calcular Regresión</button>
             </form>
             
@@ -336,10 +380,150 @@
                     <span class="result-value">{{ "%.8f"|format(resultados.b) }}</span>
                 </div>
                 
+                <div class="result-item">
+                    <span class="result-label">Coeficiente de correlación (r):</span>
+                    <span class="result-value">{{ "%.5f"|format(resultados.r) }}</span>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">Coeficiente de determinación (r²):</span>
+                    <span class="result-value">{{ "%.5f"|format(resultados.r2) }}</span>
+                </div>
+                
                 <div class="equation">
                     📈 {{ resultados.ecuacion }}
                 </div>
             </div>
+            
+            <!-- Agregar esta sección después de los resultados principales -->
+            {% if resultados and resultados.term_comun is defined %}
+            <div class="results" style="border-color: #ffc107;">
+                <h2>🔍 Valores para Depuración</h2>
+                
+                <div class="result-item">
+                    <span class="result-label">Término común:</span>
+                    <span class="result-value">{{ "%.5f"|format(resultados.term_comun) }}</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">Error de confianza:</span>
+                    <span class="result-value">{{ "%.5f"|format(resultados.error_conf) }}</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">Error de predicción:</span>
+                    <span class="result-value">{{ "%.5f"|format(resultados.error_pred) }}</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">√(término común):</span>
+                    <span class="result-value">{{ "%.5f"|format(resultados.term_comun ** 0.5) }}</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">√(1 + término común):</span>
+                    <span class="result-value">{{ "%.5f"|format((1 + resultados.term_comun) ** 0.5) }}</span>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if resultados and resultados.x0 is defined %}
+            <div class="results">
+                <h2>📊 Intervalos de Confianza y Predicción</h2>
+                
+                <div class="result-item">
+                    <span class="result-label">Valor x₀:</span>
+                    <span class="result-value">{{ "%.5f"|format(resultados.x0) }}</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">Estimación puntual ŷ(x₀):</span>
+                    <span class="result-value">{{ "%.5f"|format(resultados.y_hat_x0) }}</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">Valor t crítico:</span>
+                    <span class="result-value">{{ "%.5f"|format(resultados.t_value) }}</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">Nivel de significancia δ:</span>
+                    <span class="result-value">{{ "%.5f"|format(resultados.delta) }}</span>
+                </div>
+                
+                <div class="equation" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); margin-bottom: 15px;">
+                    Intervalo de Confianza del {{ (1-resultados.delta)*100 }}% para E(Y|x₀)
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">Límite Inferior:</span>
+                    <span class="result-value">{{ "%.5f"|format(resultados.li_conf) }}</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">Límite Superior:</span>
+                    <span class="result-value">{{ "%.5f"|format(resultados.ls_conf) }}</span>
+                </div>
+                
+                <div class="equation" style="background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%); margin-bottom: 15px;">
+                    Intervalo de Predicción del {{ (1-resultados.delta)*100 }}% para Y(x₀)
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">Límite Inferior:</span>
+                    <span class="result-value">{{ "%.5f"|format(resultados.li_pred) }}</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">Límite Superior:</span>
+                    <span class="result-value">{{ "%.5f"|format(resultados.ls_pred) }}</span>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if resultados and resultados.a_S is defined %}
+            <div class="results">
+                <h2>💰 Intervalos para S = a + b · Y </h2>
+                
+                <div class="result-item">
+                    <span class="result-label">Función Salario:</span>
+                    <span class="result-value">{{ resultados.ecuacion_S }}</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">Estimación puntual Ŝ(x₀):</span>
+                    <span class="result-value">{{ "%.5f"|format(resultados.s_hat_x0) }}</span>
+                </div>
+                
+                <div class="equation" style="background: linear-gradient(135deg, #17a2b8 0%, #138496 100%); margin-bottom: 15px;">
+                    Intervalo de Confianza del {{ (1-resultados.delta)*100 }}% para E(S|x₀)
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">Límite Inferior:</span>
+                    <span class="result-value">{{ "%.5f"|format(resultados.li_conf_s) }}</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">Límite Superior:</span>
+                    <span class="result-value">{{ "%.5f"|format(resultados.ls_conf_s) }}</span>
+                </div>
+                
+                <div class="equation" style="background: linear-gradient(135deg, #6f42c1 0%, #e83e8c 100%); margin-bottom: 15px;">
+                    Intervalo de Predicción del {{ (1-resultados.delta)*100 }}% para S(x₀)
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">Límite Inferior:</span>
+                    <span class="result-value">{{ "%.5f"|format(resultados.li_pred_s) }}</span>
+                </div>
+                
+                <div class="result-item">
+                    <span class="result-label">Límite Superior:</span>
+                    <span class="result-value">{{ "%.5f"|format(resultados.ls_pred_s) }}</span>
+                </div>
+            </div>
+            {% endif %}
             {% endif %}
         </div>
     </div>
